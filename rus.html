@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arafat меню</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('png/background.png') no-repeat center center fixed; /* Замените 'background.jpg' на путь к вашему изображению */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            height: 50px; /* Установлена фиксированная высота */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Добавлена тень */
+            background-color: #213521; /* Установлен белый фон для header */
+        }
+
+        .header-left {
+            background-color: #EEE7DB; /* Темно-красный цвет */
+            color: #213521;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%; /* Высота 100%, чтобы соответствовать высоте header */
+            width: 20%; /* Установлена фиксированная ширина */
+            border-top-right-radius: 10px; /* Закругленные углы справа сверху */
+            border-bottom-right-radius: 10px; /* Закругленные углы справа снизу */
+        }
+
+        .mobile-nav {
+	    display: none;
+	    flex-direction: column;
+	    background-color: #EEE7DB; /* Темно-красный цвет фона меню */
+	    position: fixed;
+	    top: 25px; /* Установлено ниже header */
+	    left: 0;
+	    width: 200px;
+	    height: calc(100vh - 50px); /* Занимает всю высоту экрана, за вычетом высоты header */
+	    overflow-y: auto; /* Добавляет вертикальный скролл */
+	    border-radius: 0 8px 8px 0;
+	    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); /* Увеличена тень */
+	    z-index: 1001;
+		}
+
+        .header-right {
+            background-color: #213521;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            height: 100%; /* Высота 100%, чтобы соответствовать высоте header */
+            width: 80%; /* Установлена фиксированная ширина */
+        }
+
+        .logo {
+            height: 30px; /* Уменьшен размер логотипа */
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            font-size: 5vw; /* Увеличен размер шрифта */
+            color: #213521;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); /* Увеличена тень */
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5vw; /* Размер шрифта в зависимости от ширины окна */
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff6347; /* Цвет при наведении */
+        }
+
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background-color: #EEE7DB; /* Темно-красный цвет фона меню */
+            position: fixed;
+            top: 50px; /* Установлено ниже header */
+            left: 0;
+            width: 200px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); /* Увеличена тень */
+            z-index: 1001;
+        }
+
+        .mobile-nav a {
+            color: #213521; /* Цвет текста в бургер-меню */
+            padding: 12px; /* Уменьшено padding */
+            text-decoration: none; /* Убираем подчеркивание */
+            border-bottom: 1px solid #fff; /* Цвет границы между пунктами */
+            font-size: 2.5vw; /* Уменьшен размер шрифта */
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        main {
+            margin-top: 80px; /* Увеличено, чтобы учесть высоту логотипа */
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+            text-align: center; /* Центрирование содержимого секций */
+        }
+
+        h2 {
+            color: #ff6347; /* Цвет заголовков */
+            border-bottom: 2px solid #ff6347;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            font-size: 4vw; /* Размер шрифта в зависимости от ширины окна */
+        }
+
+        .menu-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличена тень */
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #EEE7DB;
+            color: #213521;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            font-size: 2.5vw;
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-left p {
+            margin: 5px 0; /* Smaller margin between the first three items */
+        }
+
+        .footer-right {
+            align-self: flex-end; /* Align the last item to the bottom right */
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #213521;
+            margin: 5px 0; /* Margin between contact links */
+        }
+
+        .contact-link img {
+            width: 20px; /* Set the width of the icon */
+            height: 20px; /* Set the height of the icon */
+            margin-right: 5px; /* Space between icon and text */
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            nav a {
+                font-size: 3.5vw; /* Еще уменьшен размер шрифта для мобильных устройств */
+            }
+        }
+        .submenu {
+            display: none; /* Скрыть подменю по умолчанию */
+            flex-direction: column;
+            padding-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .submenu a {
+            font-size: 2.3vw; /* Размер шрифта для пунктов подменю */
+        }
+
+        i {
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 3px;
+        margin-left: 5px; /* Space between icon and text */
+        transition: max-height 0.5s ease-out;
+        }
+
+        .down {
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+
+        .down.open{
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+
+        .submenu-visible {
+            max-height: 500px; /* Достаточно большое значение для максимальной высоты */
+        }
+
+        /* Анимация для стрелки */
+
+        .mobile-nav .submenu-visible {
+            display: flex; /* Показать подменю при клике */
+        }
+    </style>
+</head>
+<body>
+
+<header id="header">
+    <div class="header-left">
+        <div class="burger-menu" id="burger-menu">Меню</div>
+    </div>
+    <div class="header-right">
+        <img src="png/logo.png" alt="Логотип ресторана" class="logo"> <!-- Замените 'logo.png' на путь к вашему логотипу -->
+    </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+    <a href="#arafat_1">Завтраки</a>
+    <a href="#arafat_2">Закуски-Гарниры</a>
+    <a href="#arafat_3">Хлеб</a>
+    <a href="#arafat_4">Салаты</a>
+    <a href="#arafat_5">Салаты на майоенезе</a>
+    <a href="#arafat_6">Фаст-Фуд</a>
+    <a href="#arafat_7">Супы</a>
+    <a href="#arafat_8">Основные блюда</a>
+    <a href="#arafat_9">Блюда из рыбы</a>
+    <a href="#arafat_10">Стейк</a>
+    <a href="#arafat_11">Паста</a>
+    <a href="#arafat_12">Пицца</a>
+    <a href="#arafat_13">Шашлыки</a>
+    <a href="#arafat_14">Роллы</a>
+    <a href="#arafat_15">Банкетные блюды</a>
+    <a href="#arafat_16">Десерты</a>
+    <a href="#arafat_17">Чайная карта-БаблТи-Матча</a>
+    <a href="#arafat_18">Кофе-Милкшейк-Фреш-Коктейль</a>
+    <a href="#arafat_19">Лимонады-Напитки-Смузи</a>
+    </div>
+</div>
+</div>
+
+<main>
+    <section id="message_section">
+        <img src="menu/ru/0-2.png" alt="Здравствуйте это Arafat" class="menu-image">
+    </section>
+    <section id="arafat_1">
+        <img src="menu/ru/0-3.png" alt="Таңғы астар" class="menu-image">
+    </section>
+    <section id="arafat_2">
+        <img src="menu/ru/0-4.png" alt="Тіскебасарлар-Асқоспалар" class="menu-image">
+    </section>
+    <section id="arafat_3">
+        <img src="menu/ru/0-5.png" alt="Нан" class="menu-image">
+    </section>   
+    <section id="arafat_4">
+        <img src="menu/ru/0-6.png" alt="Салаты" class="menu-image">
+    </section>    
+    <section id="arafat_5">
+        <img src="menu/ru/0-7.png" alt="Майонез қосылған салаттар" class="menu-image">
+    </section>
+    <section id="arafat_6">
+        <img src="menu/ru/0-8.png" alt="Фаст-Фуд" class="menu-image">
+    </section>
+    <section id="arafat_7">
+        <img src="menu/ru/0-9.png" alt="Сорпалар" class="menu-image">
+    </section>
+    <section id="arafat_7.1">
+        <img src="menu/ru/0-9-1.png" alt="Сорпалар.1" class="menu-image">
+    </section>
+    <section id="arafat_8">
+        <img src="menu/ru/1-1.png" alt="Негізгі тағамдар" class="menu-image">
+    </section>
+    <section id="arafat_8.1">
+        <img src="menu/ru/1-1-1.png" alt="Негізгі тағамдар" class="menu-image">
+    </section>    
+    <section id="arafat_8.2">
+        <img src="menu/ru/1-1-2.png" alt="Негізгі тағамдар" class="menu-image">
+    </section>   ru
+    <section id="arafat_8.3">
+        <img src="menu/ru/1-1-3.png" alt="Негізгі тағамдар" class="menu-image">
+    </section> 
+    <section id="arafat_8.4">
+        <img src="menu/ru/1-1-4.png" alt="Негізгі тағамдар" class="menu-image">
+    </section> 
+    <section id="arafat_9">
+        <img src="menu/ru/1-2.png" alt="Балықтан жасалған тағамдар" class="menu-image">
+    </section>   
+    <section id="arafat_10">
+        <img src="menu/ru/1-3.png" alt="Стейк" class="menu-image">
+    </section>    
+    <section id="arafat_11">
+        <img src="menu/ru/1-4.png" alt="Паста" class="menu-image">
+    </section>  
+    <section id="arafat_11.1">
+        <img src="menu/ru/1-4-1.png" alt="Паста" class="menu-image">
+    </section>  
+    <section id="arafat_11.2">
+        <img src="menu/ru/1-4-2.png" alt="Паста" class="menu-image">
+    </section>  
+    <section id="arafat_12">
+        <img src="menu/ru/1-5.png" alt="Пицца" class="menu-image">
+    </section>
+    <section id="arafat_12.1">
+        <img src="menu/ru/1-5-1.png" alt="Пицца" class="menu-image">
+    </section>   
+    <section id="arafat_13">
+        <img src="menu/ru/1-6.png" alt="Шашлык" class="menu-image">
+    </section>  
+    <section id="arafat_14">
+        <img src="menu/ru/1-7.png" alt="Роллы" class="menu-image">
+    </section>  
+    <section id="arafat_15">
+        <img src="menu/ru/1-8.png" alt="Зияпатқа арналған тағамдар" class="menu-image">
+    </section>  
+    <section id="arafat_15.1">
+        <img src="menu/ru/1-8-1.png" alt="Зияпатқа арналған тағамдар" class="menu-image">
+    </section>
+    <section id="arafat_16">
+        <img src="menu/ru/1-9.png" alt="Тәттілер" class="menu-image">
+    </section> 
+    <section id="arafat_17">
+        <img src="menu/ru/2-1.png" alt="Шайлар-БаблТи-Матча" class="menu-image">
+    </section> 
+    <section id="arafat_18">
+        <img src="menu/ru/2-2.png" alt="Кофе-Сүт" class="menu-image">
+    </section> 
+    <section id="arafat_19">
+        <img src="menu/ru/2-3.png" alt="Лимонадтар-Сусындар-Езбесусын" class="menu-image">
+    </section> 
+</main>
+
+
+<footer>
+    <div class="footer-right">
+        <p>Адрес: Улица Коркыт Ата, 31</p>
+        <p>Телефон: +7‒776‒200‒70‒70</p>
+        <p>          +7‒776‒500‒70‒70</p>
+        <p>Все права защищены Исполнителем.</p>
+    </div>
+</footer>
+
+<script>
+    // Закрытие бургер-меню при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileNav = document.getElementById('mobile-nav');
+        const burgerMenu = document.getElementById('burger-menu');
+
+        // Проверяем, открыто ли меню
+        if (burgerMenu.classList.contains('open')) {
+            burgerMenu.classList.remove('open');
+        }
+
+        // Закрываем мобильное меню
+        mobileNav.style.display = 'none';
+    });
+
+    // Плавная прокрутка к верху страницы при клике на логотип
+    document.querySelector('.logo').addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Плавная прокрутка к секциям
+    document.querySelectorAll('nav a, .mobile-nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const headerOffset = document.getElementById('header').offsetHeight;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Закрытие мобильного меню после клика
+            if (window.innerWidth <= 768 && !this.closest('.submenu')) {
+                document.getElementById('mobile-nav').style.display = 'none';
+                document.getElementById('burger-menu').classList.remove('open');
+            }
+        });
+    });
+
+    // Открытие/закрытие бургер-меню
+    document.getElementById('burger-menu').addEventListener('click', function() {
+        this.classList.toggle('open');
+        const mobileNav = document.getElementById('mobile-nav');
+        mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Открытие/закрытие подменю Барная карта
+    document.getElementById('bar-menu-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const submenu = document.getElementById('bar-submenu');
+        const arrow = this.querySelector('.down');
+        submenu.classList.toggle('submenu-visible');
+        arrow.classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>
